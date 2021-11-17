@@ -8,8 +8,8 @@ const config = require("./DBconfig");
 router.route("/").get(async (req, res) => {
   try {
     const pool = await sql.connect(config);
-    const orders = await pool.request().query("SELECT * from Todos");
-    res.status(200).json(orders.recordsets);
+    const todos = await pool.request().query("SELECT * from Todos");
+    res.status(200).json(todos.recordsets);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -34,12 +34,10 @@ router.route("/:id").get(async (req, res) => {
     const pool = await sql.connect(config);
     const todo = await pool
       .request()
-      .query(`SELECT * from Todos WHERE ID=${req.params.id}`);
+      .query(`SELECT * from Todos WHERE ID='${req.params.id}'`);
     res.status(200).json(todo.recordset);
   } catch (err) {
-    res.status(500).json({
-      msg: "fail",
-    });
+    res.status(500).json(err);
   }
 });
 
@@ -48,8 +46,8 @@ router.route("/:id").put(async (req, res) => {
     const pool = await sql.connect(config);
     const todo = await pool.request().query(
       `UPDATE Todos SET 
-          ${`Title='${req.body.Todo}'`}
-           WHERE ID=${req.params.id}`
+          ${`Todo='${req.body.Todo}'`}
+           WHERE ID='${req.params.id}'`
     );
     res.status(200).json(`${todo.rowsAffected} row updated`);
   } catch (err) {
@@ -60,10 +58,10 @@ router.route("/:id").put(async (req, res) => {
 router.route("/:id").delete(async (req, res) => {
   try {
     const pool = await sql.connect(config);
-    const order = await pool
+    const todo = await pool
       .request()
-      .query(`DELETE FROM Todos WHERE ID=${req.params.id}`);
-    res.status(204).json(`${order.rowsAffected} row deleted`);
+      .query(`DELETE FROM Todos WHERE ID='${req.params.id}'`);
+    res.status(204).json(`${todo.rowsAffected} row deleted`);
   } catch (err) {
     res.status(500).json(err);
   }

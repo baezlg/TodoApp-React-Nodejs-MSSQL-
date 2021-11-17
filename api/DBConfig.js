@@ -1,8 +1,26 @@
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+// const config = {
+//   user: process.env.USER,
+//   password: process.env.PASSWORD,
+//   server: process.env.SERVER,
+//   database: process.env.DATABASE,
+//   options: {
+//     trustedConnection: true,
+//     enableArithPort: true,
+//     instancename: process.env.INSTANCENAME,
+//     trustServerCertificate: true,
+//   },
+//   port: process.env.PORT,
+// };
+
 const config = {
   user: "baezl",
   password: "12345678",
   server: "localhost",
-  database: "Todos",
+  database: "Todo",
   options: {
     trustedConnection: true,
     enableArithPort: true,
